@@ -1,0 +1,254 @@
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+body{margin: 0;}
+
+h1{text-align: center;}
+
+#top{
+  background-color:#eeeeee;
+  height: 100px;
+}
+
+#topTitle{
+  width: 60%;
+  position: absolute;
+  float: left;
+}
+
+#topMenu{
+  min-width: 270px;
+  position: relative;
+  float: right;
+  margin: 5px 3px;
+}
+
+#topMenu input[type="button"]{
+  display: inline-block;
+  height: 90px;
+  margin: 0 1px;
+}
+
+#treeView{
+  padding: 0;
+  margin: 0;
+  border: solid 3px #aaaaaa;
+  clear: right;
+  width:auto;
+  height: auto;
+}
+
+#attribution{
+  width: 700px;
+  height:300px;
+  position: absolute;
+  border: 2px solid #000;
+  background-color: #eee;
+  opacity:0.9;
+  display: none;
+  z-index: 1;  /* 「オーバーレのHTML要素」よりもスタックレベルを高くする */
+  border-radius:20px;
+}
+
+#frame_attribution{
+  width:700px;
+  height:270px;
+  border-radius:0px 0px 20px 20px;
+}
+
+#windowBar{
+  background-color:#87ceeb;
+  color:white;
+  width:700px;
+  height:30px;
+  border-radius:20px 20px 0px 0px;
+}
+
+#frame_problem{
+  width:100%;
+  height:700px;
+}
+
+#windowTitle{
+  font:bold;
+  text-align: center;
+  cursor:move;
+}
+
+#unVisible{
+  cursor:pointer;
+  color:black;
+  margin-top:-28px;
+  margin-right:0px;
+  margin-left:650px;
+}
+
+#recommendPages{
+  width: 700px;
+  height:300px;
+  position: absolute;
+  border: 2px solid #000;
+  background-color: #eee;
+  opacity:0.9;
+  display: none;
+  z-index: 1;  /* 「オーバーレのHTML要素」よりもスタックレベルを高くする */
+  border-radius:20px;
+}
+
+#frame_recommendPages{
+  width:700px;
+  height:270px;
+  border-radius:0px 0px 20px 20px;
+}
+
+#windowBar_2{
+  background-color:#87ceeb;
+  color:white;
+  width:700px;
+  height:30px;
+  border-radius:20px 20px 0px 0px;
+}
+
+#windowTitle_2{
+  font:bold;
+  text-align: center;
+  cursor:move;
+}
+
+#unVisible_2{
+  cursor:pointer;
+  color:black;
+  margin-top:-28px;
+  margin-right:0px;
+  margin-left:650px;
+}
+
+#loader-bg4recommend {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: #ffffff;
+  z-index: 1;
+  background: rgba(255,255,255, 0.8);
+}
+
+#loader4recommend {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -100px;
+  text-align: center;
+  color: #000000;
+  z-index: 2;
+}
+
+/*診断におけるロード中表示*/
+#loading {
+  display: table;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  font-size:20px;
+  opacity: 0.8;
+}
+
+#loading .loadingMsg {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 8%;
+  background: url("../loader.gif") center center no-repeat;
+  background-size:5%;
+}
+
+.deco_1 {
+  margin: 0 auto;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  
+  
+}
+
+#contextmenu_1{
+  display:none;
+  position:fixed;
+  left:0px;
+  top:0px;
+  width: 210px;
+  height:140px;
+  background-color:rgba(245,245,245, 0.8);
+  border:0px solid black;
+  box-shadow: 5px 4px 5px #2e2c2c55;
+}
+
+#contextmenu_1.show_1{
+  display: flex;
+}
+#contextmenu_1 li{
+  list-style: none;
+  transition: all 0.5s 0s ease;
+  margin: 0px;
+  padding: 5px;
+  cursor:pointer;
+}
+#contextmenu_1 li:hover{
+  color: white;
+  background-color: #87ceeb;
+}
+
+.deco_2 {
+  padding: 0px;
+  margin: 0 auto;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  
+}
+
+#contextmenu_2{
+  display:none;
+  position:fixed;
+  left:0px;
+  top:0px;
+  width: 160px;
+  height:40px;
+  background-color:rgba(245,245,245, 0.8);
+  border:0px solid black;
+  box-shadow: 5px 4px 5px #2e2c2c55;
+}
+
+#contextmenu_2.show_2{
+  display: flex;
+}
+#contextmenu_2 li{
+  list-style: none;
+  transition: all 0.5s 0s ease;
+  padding: 0px;
+  /*margin: 0px;*/
+  /*padding: 5px;*/
+  cursor:pointer;
+}
+#contextmenu_2 li:hover{
+  color:white;
+  background-color: #87ceeb;
+}

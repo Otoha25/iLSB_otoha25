@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!--CSP回避用・無いとjs他が死ぬ-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline';">
+
+    <!--stylesheet(CSS)とjsファイルのインポート-->
+    <link rel="stylesheet" href="../css/KeywordRepository.css" type="text/css">
+    <script src='../../lib/jquery-3.2.1.js'></script>
+    <script src="../../lib/sweetalert.min.js"></script>
+    <script src='../../lib/Class.js'></script>
+    <script src="../../lib/library.js"></script>
+
+  </head>
+
+  <body>
+    <h2 id="KeywordRepositoryTitle" style="padding-left:10px; font-size:15px; width:100%">KeywordRepository</h2>
+    <!--キーワードマップセーブ＆ロード機能(未実装)、課題キーワードをテーブル(じゃなくてもいいけど)で整列-->
+
+    <table align="center" id="buttons">
+      <tr>
+        <td align="center" >
+          <button id="saveDataButton" class="button">Save</button>
+        </td>
+        <td align="center">
+          <button id="loadDataButton" class="button">Load</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <button id="showTreeViewButton" class="button"> Question Tree</button>
+        </td>
+      </tr>
+      <!--<tr>
+        <td colspan="2" align="center">
+          <button id="ProblemGenerateButton" class="button" target="window_name">テスト生成</button>
+        </td>
+      </tr>-->
+      <tr>
+        <td colspan="2" align="center"><label id="subjectLabel" align="center">Current Question Keyword</label></td>
+      </tr>
+
+      <tr>
+        <td id="subjectContainer" height="35px" colspan="2" style="font:20px bold;"></td>
+      </tr>
+    </table>
+
+
+
+    <!--キーワードリポジトリ(詳しい機能はjsで実装)-->
+    <table  id="KeywordRepository" class="dropzone">
+      <tbody>
+      </tbody>
+    </table>
+
+    <!--右クリックメニュー-->
+    <!--<menu id="menu" type="context">
+      <menuitem id="searchKeyword" label="キーワード抽出元に戻る"></menuitem>
+      <menuitem id="deleteKeyword" label="キーワードを消す"></menuitem>
+      <menuitem id="changeKeyword" label="キーワード名を変更する"></menuitem>
+    </menu>-->
+    <!--右クリックメニュー修正版(2022.10.14)-->
+    <div hidden class = "deco">
+      <div id = "contextmenu">
+        <ul>
+          <li id="searchKeyword">キーワード抽出元に戻る</li>
+          <li id="deleteKeyword">キーワードを消す</li>
+          <li id="changeKeyword">キーワード名を変更する</li>
+        </ul>
+      </div>
+    </div>
+    <!--keywordRepositoryに関するものはコンテンツに依存するものも多いなため，全てHTMLファイルの最後で定義-->
+    <script src='save_load.js'></script>
+    <script src='makeRelationOnKeyRep.js'></script>
+    <script src="keywordRepository.js"></script>
+    <script src='dragAndDropInRepository.js'></script>
+    <script src='dropToTreeViewFromRepository.js'></script>
+    <script src='operatingWebPages.js'></script>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/treeView.css">
+    <script src='../../lib/jquery-3.2.1.js'></script>
+    <script src="../../lib/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery.balloon.js"></script>
+    <title>Question Tree</title>
+  </head>
+  <body>
+    <!--上の部分-->
+    <div id="top">
+      <div id="topTitle">
+        <h1>Question Tree</h1>
+      </div>
+      <div id="topMenu">
+        <input id="recommendWebPages" type="button" value="Webページ推薦モード">
+        <input id="deleteQKeyword" type="button" value="キーワード削除">
+        <input id="editQKeyBranch" type="button" value="リンク編集">
+        <input id="finishCreateTree" type="button" value="学習終了">
+
+      </div><!--//topMenu-->
+    </div><!--//top-->
+
+    <!--学習シナリオ作成部-->
+    <canvas id="treeView" width="300" height="300" contextmenu="keywordBoxPopup"></canvas>
+    <!-- 右クリックメニューをiframeを使って対応 -->
+    <!--課題タイプ選択-->
+    <div hidden id="attribution" height="10%">
+      <div id="windowBar">
+        <div id="windowTitle">title</div>
+        <div id="unVisible">×</div>
+      </div>
+      <iframe id = "frame_attribution" src="attribution.html"></iframe>
+    </div>
+
+    <!-- Webページ推薦window -->
+    <div hidden id="recommendPages" height="10%">
+      <div id="windowBar_2">
+        <div id="windowTitle_2">title</div>
+        <div id="unVisible_2">×</div>
+      </div>
+      <iframe id = "frame_recommendPages" src="recommendPages.html"></iframe>
+    </div>
+
+<!-- popupMenu -->
+
+<div hidden class="deco_1">
+  <div id="contextmenu_1">
+    <ul>
+      <li id="deleteQKeywordRight">キーワードを削除する</li>
+      <li id="editQKeyword">キーワードを変更する</li>
+      <li id="searchQKeyword">キーワードを検索する</li>
+      <li id="QkeyType">課題タイプを選択する</li>
+    </ul>
+  </div>
+</div>
+
+<div hidden class="deco_2">
+  <div id="contextmenu_2">
+  <ul>
+    <li id="editLinkTypeMenu">属性を選択する</li>
+  </ul>
+  </div>
+</div>
+
+    <!--id指定の関係で下の方に配置・上に持っていくとidが（多分）参照できずにエラーを起こす-->
+    <script type="text/javascript" src="../../lib/Class.js"></script>
+    <script type="text/javascript" src="../../lib/functionInClass.js"></script>
+    <script src="../../lib/library.js"></script>
+    <script type="text/javascript" src="treeViewDraw.js"></script>
+    <script type="text/javascript" src="LinkEdit.js"></script>
+    <script type="text/javascript" src="treeViewWindow.js"></script>
+    <script type="text/javascript" src="treeView.js"></script>
+    <script type="text/javascript" src="popUpMenu.js"></script>
+    <script type="text/javascript" src="shortcutInTreeView.js"></script>
+    <script type="text/javascript" src="../../server_ilsb/relation.js"></script>
+  </body>
+</html>
