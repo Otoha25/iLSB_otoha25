@@ -4,7 +4,12 @@
         "module": "CommonJS",
         "sourceMap": true,
         "strict": true,
-    },
+		"baseUrl": "src",
+		"paths": {
+            // paths を追加するときは，webpack.config.js の resolve.alias にも書くこと
+			"@lib/*": ["./lib/*"]
+		}
+	},
 
     "include": ["./src/**/*"],
 }

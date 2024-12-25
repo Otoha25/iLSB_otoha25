@@ -1,3 +1,4 @@
+const path = require("node:path");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -32,6 +33,10 @@ module.exports = {
 
     resolve: {
         extensions: [".ts", ".js"],
+        //alias を追加するときは，tsconfig.json の conpilerOptions.paths にも書くこと
+        alias: {
+            "@lib": path.resolve(__dirname, "src/lib"),
+        }
     },
 
     plugins: [
