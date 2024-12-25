@@ -1,43 +1,58 @@
-import { Quekey } from "../types";
-import { APIOptions } from "./api"
+import type { Quekey } from "@lib/types";
+import type { ListStoreAPI } from "./api";
+import { getQuekeyList, setQuekeyList } from "./local-storage";
 
-const LS_QUEKEYS = "iLSB_Quekeys"
+const options: ListStoreAPI<Quekey> = {
+	all() {
+		const quekeys = getQuekeyList();
+		if (quekeys === null) {
+			throw new Error("Quekeys is not defined in LocalStorage.");
+		}
+		return quekeys;
+	},
 
-const options: APIOptions<Quekey> = {
-  all() {
-    const json = localStorage.getItem(LS_QUEKEYS);
-    if (json === null) {
-      throw new Error("Quekeys is not defined in LocalStorage.");
-    }
-    const quekeys = JSON.parse(json) as Quekey[];
-    return quekeys;
-  },
+	get(id) {
+		const quekeys = this.all();
+		const quekey = quekeys.find((quekey) => quekey.id === id);
+		if (quekey === undefined) {
+			throw new Error(`Quekey id: ${id} is not defined.`);
+		}
+		return quekey;
+	},
 
-  get(id) {
-    const allQuekeys = this.all();
-    const quekey = allQuekeys.find(quekey => quekey.id === id);
-    if (quekey === undefined) {
-      throw new Error(`Quekey id: ${id} is not defined.`);
-    }
-    return quekey;
-  },
+	create(partial_quekey) {
+		const id = crypto.randomUUID();
+		const quekey = { ...partial_quekey, id };
+		this.insert(quekey);
+		return quekey;
+	},
 
-  insert(quekey) {
-    const oldQuekeys = this.all();
-    const newQuekeys = [...oldQuekeys, quekey];
-    const json = JSON.stringify(newQuekeys);
-    localStorage.setItem(LS_QUEKEYS, json);
-  },
+	insert(quekey) {
+		const oldQuekeys = this.all();
+		const newQuekeys = [...oldQuekeys, quekey];
+		setQuekeyList(newQuekeys);
+		return newQuekeys;
+	},
 
-  remove(id) {
-    const quekeys = this.all();
-    const index = quekeys.findIndex(quekey => quekey.id === id);
-    quekeys.splice(index, 1);
-  },
-  
-  update(id, key, value) {
-    throw new Error("Unimplemented!")
-  },
+	remove(id) {
+		const quekeys = this.all();
+		const index = quekeys.findIndex((quekey) => quekey.id === id);
+		quekeys.splice(index, 1);
+		setQuekeyList(quekeys);
+		return quekeys;
+	},
+
+	update(id, key, value) {
+		const quekeys = this.all();
+		const newQuekeys = quekeys.map((quekey) => {
+			if (quekey.id === id) {
+				quekey[key] = value;
+			}
+			return quekey;
+		});
+		setQuekeyList(quekeys);
+		return quekeys;
+	},
 };
 
 export default options;

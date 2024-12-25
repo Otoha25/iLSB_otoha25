@@ -1,19 +1,18 @@
-// local-storageのキー
-const LSKEY_CURRENT_QUEKEY_ID = "iLSBCurrentQKId";
-const LSKEY_HEADER = "iLSBHeader";
-const LSKEY_QUEKEY_LIST = "iLSBQKList";
-const LSKEY_QUELINK_LIST = "iLSBQLinkList";
-const LSKEY_SEGKEY_LIST = "iLSBSKList";
+import { getMetaData } from "./local-storage";
 
-export function hasLearningData () {
-    let header = localStorage.getItem(LSKEY_HEADER);
-    return header != null;
+export function hasLearningData() {
+	const metaData = getMetaData();
+	return metaData != null;
+}
+
+export function createLearningData() {
+	const 
 }
 
 export function clearStorage() {
-    localStorage.clear()
+	localStorage.clear();
 }
 
 // export function putCurrentQK () {
-    
+
 // }
