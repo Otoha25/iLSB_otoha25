@@ -5,7 +5,54 @@
         <title>Keyword Repository</title>
     </head>
     <body>
-        keyword repository
-        <button onclick="call()">call</button>
+        <h2 id="KeywordRepositoryTitle" style="padding-left:10px; font-size:15px; width:100%">KeywordRepository</h2>
+        <!--キーワードマップセーブ＆ロード機能(未実装)、課題キーワードをテーブル(じゃなくてもいいけど)で整列-->
+    
+        <table align="center" id="buttons">
+            <tr>
+                <td align="center" >
+                <button id="saveDataButton" class="button">Save</button>
+                </td>
+                <td align="center">
+                <button id="loadDataButton" class="button">Load</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                <button id="showTreeViewButton" class="button"> Question Tree</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><label id="subjectLabel" align="center">Current Question Keyword</label></td>
+            </tr>
+            <tr>
+                <td id="subjectContainer" height="35px" colspan="2" style="font:20px bold;"></td>
+            </tr>
+        </table>
+    
+    
+    
+        <!--キーワードリポジトリ(詳しい機能はjsで実装)-->
+        <table  id="KeywordRepository" class="dropzone">
+            <tbody>
+            </tbody>
+        </table>
+    
+        <!--右クリックメニュー-->
+        <!--<menu id="menu" type="context">
+          <menuitem id="searchKeyword" label="キーワード抽出元に戻る"></menuitem>
+          <menuitem id="deleteKeyword" label="キーワードを消す"></menuitem>
+          <menuitem id="changeKeyword" label="キーワード名を変更する"></menuitem>
+        </menu>-->
+        <!--右クリックメニュー修正版(2022.10.14)-->
+        <div hidden class = "deco">
+            <div id = "contextmenu">
+                <ul>
+                <li id="searchKeyword">キーワード抽出元に戻る</li>
+                <li id="deleteKeyword">キーワードを消す</li>
+                <li id="changeKeyword">キーワード名を変更する</li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>
