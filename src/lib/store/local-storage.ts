@@ -1,4 +1,4 @@
-import type { Header, Quekey, Quelink, Segkey } from "@lib/types";
+import type { MetaData, Quekey, Quelink, Segkey } from "@lib/types";
 
 // local-storageのキー
 const LSKey = {
@@ -10,7 +10,7 @@ const LSKey = {
 };
 
 type LSCurrentQuekeyId = Quekey["id"];
-type LSMetaData = Header;
+type LSMetaData = MetaData;
 type LSQuekey = Quekey;
 type LSQuelink = Quelink;
 type LSSegkey = Segkey;

@@ -1,38 +1,41 @@
-import { confirm, promptForcely } from "../lib/dialog";
-import { hasLearningData } from "../lib/store";
-import { displayRepositoryContent } from "./view";
+import "@lib/assets/global.css";
+import "./index.css";
 
-async function onWindowLoad() {
-	const isContinued =
-		hasLearningData() && (await confirm("前回の続きから始めますか？"));
+// import { confirm, promptForcely } from "@lib/dialog";
+// import { hasLearningData } from "@lib/store";
 
-	// if (isContinued) {
-	//     const currentQuekeyId = getCurrentQuekeyId();
-	//     const currentQuekey = getQuekeyById(currentQuekeyId);
-	//     const segkeysAsTree = getSegkeysAsTree(currentQuekeyId);
-	//     displayRepositoryContent(currentQuekeyId, segkeysAsTree);
-	// } else {
-	//     const rootQueKeyTitle = await promptForcely("学習する課題を入力");
-	//     const username = await promptForcely("自分の名前を入力");
+// async function onWindowLoad() {
+// 	window.alert("OK");
+// 	const continued =
+// 		hasLearningData() && (await confirm("前回の続きから始めますか？"));
 
-	//     setUsername(username);
-	//     const rootQueKey = createQueKey(rootQueKeyTitle);
-	//     const rootQueKeyId = rootQueKey.id;
-	//     setRootQueKeyId(rootQueKeyId);
-	// }
-}
+// 	if (continued) {
+// 		// const currentQuekeyId = getCurrentQuekeyId();
+// 		// const currentQuekey = getQuekeyById(currentQuekeyId);
+// 		// const segkeysAsTree = getSegkeysAsTree(currentQuekeyId);
+// 		// displayRepositoryContent(currentQuekeyId, segkeysAsTree);
+// 	} else {
+// 		const rootQueKeyTitle = await promptForcely("学習する課題を入力");
+// 		const username = await promptForcely("自分の名前を入力");
 
-function onTreeTabOpenRequest() {}
+// 		setUsername(username);
+// 		const rootQueKey = createQueKey(rootQueKeyTitle);
+// 		const rootQueKeyId = rootQueKey.id;
+// 		setRootQueKeyId(rootQueKeyId);
+// 	}
+// }
 
-function onExportRequest() {}
+// function onTreeTabOpenRequest() {}
 
-function onImportRequest() {}
+// function onExportRequest() {}
 
-function onMessageReceive() {}
+// function onImportRequest() {}
 
-function onKeywordDragStart() {}
+// function onMessageReceive() {}
 
-function onKeywordDrop() {}
+// function onKeywordDragStart() {}
 
-window.addEventListener("load", onWindowLoad);
-// window.
+// function onKeywordDrop() {}
+
+// window.addEventListener("load", onWindowLoad);
+// // window.

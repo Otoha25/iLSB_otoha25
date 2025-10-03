@@ -1,7 +1,7 @@
-import { clearStorage } from "../lib/store";
+// import { clearStorage } from "../lib/store";
 
-export function initLearning() {
-    clearStorage();
+// export function initLearning() {
+//     clearStorage();
 
     
-}
+// }

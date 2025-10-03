@@ -1,0 +1,96 @@
+:root {
+  --primary-color: #3563ed;
+  --primary-bg-color: #e4eeff;
+  --primary-border-color: #6796fd;
+  --secondary-color: #656667;
+  --secondary-bg-color: #e7e9ed;
+  --secondary-border-color: #d1d3d5;
+  --text-color: #202124;
+  --white-color: #ffffff;
+
+  --space: 8px;
+  --space-half: 4px;
+  --space-double: 16px;
+  --space-quadruple: 32px;
+
+  --radius: 8px;
+  --radius-double: 16px;
+  --primary-shadow: 0 4px 6px rgba(49, 100, 255, 0.1);
+  --secondary-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+
+  --transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
+  --opacity-hover: 0.8;
+  --primary-shadow-hover: 0 8px 12px rgba(49, 100, 255, 0.1);
+  --transform-hover: translateY(-2px);
+
+  --white-bg-color-blur: rgba(255, 255, 255, 0.8);
+  --backdrop-filter-blur: blur(10px);
+
+  --keyword-bg-color: linear-gradient(to bottom, #c8edff 0%, #a5dcff 100%);
+  --keyword-border-color: #9eceff;
+}
+
+body {
+  font-size: 16px;
+}
+
+.button {
+  display: inline-block;
+  padding: var(--space);
+  border-style: none;
+  border-radius: var(--radius);
+  box-shadow: var(--primary-shadow);
+  transition: var(--transition);
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.button.primary {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.button:hover {
+  opacity: var(--opacity-hover);
+  box-shadow: var(--primary-shadow-hover);
+  transform: var(--transform-hover);
+}
+
+.button-container {
+  display: flex;
+  gap: var(--space);
+  flex-wrap: wrap;
+}
+
+
+
+.context-menu {
+  position: absolute;
+  top: 300px;
+  left: 8px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  padding: var(--space);
+  background-color: var(--white-bg-color-blur);
+  backdrop-filter: var(--backdrop-filter-blur);
+  border: 1px solid var(--secondary-border-color);
+  border-radius: var(--radius-double);
+  box-shadow: var(--secondary-shadow);
+  z-index: 1000;
+}
+
+.context-menu-item {
+  padding: var(--space-half) var(--space);
+  border: transparent;
+  border-radius: var(--radius);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.context-menu-item:hover {
+  color: var(--white-color);
+  background-color: var(--primary-color);
+}

@@ -1,4 +1,85 @@
-#subjectContainer{
+main {
+	margin: 8px;
+}
+
+h1 {
+	margin-block: 0.75rem;
+	font-size: 1.5rem;
+	font-weight: normal;
+}
+
+#current-keyword {
+	margin-block-start: var(--space-quadruple);
+	margin-block-end: var(--space-double);
+	padding: var(--space-double);
+	border: 2px solid var(--primary-border-color);
+	border-radius: var(--radius-double);
+}
+
+#current-keyword-label {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: var(--secondary-color);
+}
+
+#current-keyword-name {
+	margin-block-start: var(--space-double);
+	font-size: 1.6rem;
+	font-weight: bold;
+	color: var(--text-color);
+	margin-top: var(--space-half);
+}
+
+.keyword {
+	width: 100%;
+	margin-block: 12px;
+}
+
+.keyword.parent {
+	position: relative;
+	margin-block-end: 24px;
+}
+
+.keyword.parent::before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: calc(100% - var(--space) * 2);
+	height: calc(100% - 16px);
+	margin-inline: var(--space);
+	top: 16px;
+	border: 2px solid var(--primary-border-color);
+	border-radius: var(--radius-double);
+	z-index: 0;
+}
+
+.keyword-name {
+	position: relative;
+	margin-inline: var(--space-double);
+	padding-block: var(--space-half);
+	padding-inline: var(--space);
+	text-align: center;
+	font-size: 1.4rem;
+	border: 1px solid var(--keyword-border-color);
+	border-radius: var(--radius);
+	color: var(--text-color);
+	background: var(--keyword-bg-color);
+	box-shadow: var(--secondary-shadow);
+	z-index: 1;
+}
+
+.keyword-children {
+	margin-inline: var(--space-double);
+	padding-block-end: 32px;
+}
+
+#repository {
+	margin-inline: var(--space-double);
+}
+
+
+
+/* #subjectContainer{
 	background-color: white;
 	overflow: hidden;
 	text-align: center;
@@ -63,7 +144,7 @@ body{
 	width:100%;
 }
 
-/*bavckgroundとかtdでも指定しておかないと角が白くなっちゃうので*/
+/ * bavckgroundとかtdでも指定しておかないと角が白くなっちゃうので * /
 #KeywordRepository td{
 	text-align: center;
 	height:25px;
@@ -109,7 +190,7 @@ body{
 }
 
 #KeywordRepository .inclusion tr:first-child{
-/*	background: red;*/
+/ *	background: red; * /
 	height:40px;
 	vertical-align: middle;
 }
@@ -173,4 +254,4 @@ body{
 #contextmenu li:hover{
 	color: white;
 	background-color: #87ceeb;
-}
+} */

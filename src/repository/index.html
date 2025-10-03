@@ -1,58 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>Keyword Repository</title>
-    </head>
-    <body>
-        <h2 id="KeywordRepositoryTitle" style="padding-left:10px; font-size:15px; width:100%">KeywordRepository</h2>
-        <!--キーワードマップセーブ＆ロード機能(未実装)、課題キーワードをテーブル(じゃなくてもいいけど)で整列-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>Keyword Repository</title>
+</head>
+
+<body>
+    <main>
+        <h1>Keyword Repository</h1>
+
+        <div class="button-container">
+            <div class="button primary">Open Question Tree</div>
+            <div class="button">Save</div>
+            <div class="button">Load</div>
+        </div>
+
+        <div id="current-keyword">
+            <div id="current-keyword-label">Current Question Keyword:</div>
+            <div id="current-keyword-name">地球温暖化</div>
+        </div>
+
+        <div id="repository">
+            <div class="keyword parent">
+                <div class="keyword-name">温室効果ガス</div>
+                <div class="keyword-children">
+                    <div class="keyword">
+                        <div class="keyword-name">二酸化炭素</div>
+                    </div>
+                    <div class="keyword">
+                        <div class="keyword-name">メタン</div>
+                    </div>
+                    <div class="keyword">
+                        <div class="keyword-name">一酸化二窒素</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyword">
+                <div class="keyword-name">気温上昇</div>
+            </div>
+            <div class="keyword">
+                <div class="keyword-name">異常気象</div>
+            </div>
+            <div class="keyword">
+                <div class="keyword-name">海面上昇</div>
+            </div>
+        </div>
+    </main>
     
-        <table align="center" id="buttons">
-            <tr>
-                <td align="center" >
-                <button id="saveDataButton" class="button">Save</button>
-                </td>
-                <td align="center">
-                <button id="loadDataButton" class="button">Load</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                <button id="showTreeViewButton" class="button"> Question Tree</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center"><label id="subjectLabel" align="center">Current Question Keyword</label></td>
-            </tr>
-            <tr>
-                <td id="subjectContainer" height="35px" colspan="2" style="font:20px bold;"></td>
-            </tr>
-        </table>
-    
-    
-    
-        <!--キーワードリポジトリ(詳しい機能はjsで実装)-->
-        <table  id="KeywordRepository" class="dropzone">
-            <tbody>
-            </tbody>
-        </table>
-    
-        <!--右クリックメニュー-->
-        <!--<menu id="menu" type="context">
-          <menuitem id="searchKeyword" label="キーワード抽出元に戻る"></menuitem>
-          <menuitem id="deleteKeyword" label="キーワードを消す"></menuitem>
-          <menuitem id="changeKeyword" label="キーワード名を変更する"></menuitem>
-        </menu>-->
-        <!--右クリックメニュー修正版(2022.10.14)-->
-        <div hidden class = "deco">
-            <div id = "contextmenu">
-                <ul>
+
+    <div class="context-menu">
+        <button class="context-menu-item">キーワード抽出元に戻る</button>
+        <button class="context-menu-item">キーワードを消す</button>
+        <button class="context-menu-item">キーワード名を変更する</button>
+    </div>
+
+    <div hidden class="deco">
+        <div id="contextmenu">
+            <ul>
                 <li id="searchKeyword">キーワード抽出元に戻る</li>
                 <li id="deleteKeyword">キーワードを消す</li>
                 <li id="changeKeyword">キーワード名を変更する</li>
-                </ul>
-            </div>
+            </ul>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

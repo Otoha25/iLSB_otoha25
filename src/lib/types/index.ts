@@ -1,6 +1,6 @@
 export type Id = `${string}-${string}-${string}-${string}-${string}`;
 
-export type Header = {
+export type MetaData = {
 	username: string;
 	root_quekey_id: Quekey["id"];
 
