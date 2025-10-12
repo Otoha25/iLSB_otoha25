@@ -1,41 +1,226 @@
-import "@lib/assets/global.css";
+import "@lib/view/global.css";
 import "./index.css";
+import { confirm, prompt } from "@lib/view/dialog";
+import {
+    extractSegkeyFromPage,
+    fetchCurrentPageUrl,
+    fetchKeywordRepository,
+    getSegkey,
+    hasLearningData,
+    isSegkeyExpanded,
+    makeInclusionRelation,
+    modifySegkeyTitle,
+    openKeywordMap,
+    openSearchEnginePage,
+    openSourceUrl,
+    removeInclusionRelation,
+    removeSegkey,
+    startLearning,
+} from "@lib/service";
+import { drawRepositoryContent } from "./view";
+import { DataTransferFormat } from "@lib/view/dom";
+import browser from "webextension-polyfill";
+import { RuntimeMessage } from "@lib/service/utils/runtime-message";
+import { isError } from "@lib/service/utils/result";
+import { showContextMenu } from "@lib/view/context-menu";
 
-// import { confirm, promptForcely } from "@lib/dialog";
-// import { hasLearningData } from "@lib/store";
+document.addEventListener("DOMContentLoaded", async () => {
+    const canResume = hasLearningData();
+    const continued = canResume && await confirm("前回の続きから始めますか？", true);
+    
+    if (!continued) {
+        const rootQkeyTitle = await prompt("学習する課題を入力", false);
+        const username = await prompt("自分の名前を入力", false);
+        if (rootQkeyTitle && username) {
+            const rootQkey = startLearning(username, rootQkeyTitle);
+            openKeywordMap();
+            openSearchEnginePage(rootQkey.id);
+        }
+    }
 
-// async function onWindowLoad() {
-// 	window.alert("OK");
-// 	const continued =
-// 		hasLearningData() && (await confirm("前回の続きから始めますか？"));
+    refresh();
+});
 
-// 	if (continued) {
-// 		// const currentQuekeyId = getCurrentQuekeyId();
-// 		// const currentQuekey = getQuekeyById(currentQuekeyId);
-// 		// const segkeysAsTree = getSegkeysAsTree(currentQuekeyId);
-// 		// displayRepositoryContent(currentQuekeyId, segkeysAsTree);
-// 	} else {
-// 		const rootQueKeyTitle = await promptForcely("学習する課題を入力");
-// 		const username = await promptForcely("自分の名前を入力");
+document.body.addEventListener("dragover", (e) => {
+    e.preventDefault();
+});
 
-// 		setUsername(username);
-// 		const rootQueKey = createQueKey(rootQueKeyTitle);
-// 		const rootQueKeyId = rootQueKey.id;
-// 		setRootQueKeyId(rootQueKeyId);
-// 	}
+document.body.addEventListener("drop", async (e) => {
+    e.preventDefault();
+    const dataTransfer = e.dataTransfer;
+    if (!dataTransfer) return;
+
+    await handleDropOfTextOrSegkey(e.dataTransfer, null);
+    refresh();
+});
+
+browser.runtime.onMessage.addListener(async (message: RuntimeMessage) => {
+    if (message.recipient !== "repository") return;
+    switch (message.type) {
+        case "requestRefresh":
+            refresh();
+            break;
+        case "requestExtractSelectedText":
+            const keyword = message.payload;
+            console.log("Extracting keyword:", keyword);
+            await handleExtractKeyword(keyword, null);
+            refresh();
+            break;
+    }
+});
+
+const openQuestionTreeButton = document.getElementById("open-question-tree-button");
+openQuestionTreeButton?.addEventListener("click", () => {
+    openKeywordMap();
+});
+
+function refresh() {
+    const { currentQkey, segkeys } = fetchKeywordRepository();
+    drawRepositoryContent(currentQkey.title, segkeys, {
+        onSegkeyTitleContextMenu: (e) => {
+            e.preventDefault();
+            const selfId = (e.target as HTMLElement).closest(".keyword")?.id;
+            if (!selfId) return;
+
+            e.stopPropagation();
+            handleContextMenuOpen(selfId, e.pageX, e.pageY);
+        },
+        onSegkeyTitleDragStart: (e) => {
+            const selfId = (e.target as HTMLElement).closest(".keyword")?.id;
+            const dataTransfer = e.dataTransfer;
+            if (!selfId || !dataTransfer) return;
+
+            handleSegkeyDragStart(dataTransfer, selfId);
+        },
+        onSegkeyDrop: async (e) => {
+            e.preventDefault();
+            const selfId = (e.target as HTMLElement).closest(".keyword")?.id;
+            const dataTransfer = e.dataTransfer;
+            if (!selfId || !dataTransfer) return;
+
+            e.stopPropagation();
+            await handleDropOfTextOrSegkey(dataTransfer, selfId);
+
+            refresh();
+        }
+    });
+}
+
+const handleContextMenuOpen = (targetSegkeyId: string, x: number, y: number) => {
+    showContextMenu(x, y, [
+        {label: "切り出し元のページに戻る", action: () => openSourceUrl(targetSegkeyId) },
+        {label: "キーワード名を変更", action: async () => {
+            const targetSegkey = getSegkey(targetSegkeyId);
+            if (!targetSegkey) return;
+            if (isSegkeyExpanded(targetSegkeyId)) {
+                await confirm("このキーワードは展開済みのため変更できません。", false);
+                return;
+            }
+            const newTitle = await prompt("新しいキーワード名を入力", true, targetSegkey.title);
+            if (!newTitle) return;
+            modifySegkeyTitle(targetSegkeyId, newTitle);
+            refresh();
+        }},
+        {label: "キーワードを削除", action: async () => {
+            if (isSegkeyExpanded(targetSegkeyId)) {
+                await confirm("このキーワードは展開済みのため削除できません。", false);
+                return;
+            }
+            const confirmed = await confirm("このキーワードを削除しますか？", true);
+            if (!confirmed) return;
+            removeSegkey(targetSegkeyId);
+            refresh();
+        }},
+    ]);
+};
+
+let currentContextMenuCleanup: (() => void) | null = null;
+
+// const _handleContextMenuOpen = (targetSegkeyId: string, x: number, y: number) => {
+//     currentContextMenuCleanup?.();
+//     showContextMenu(x, y);
+
+//     const onOpenSourceUrlButtonClick = () => {
+//         if (!targetSegkeyId) return;
+//         openSourceUrl(targetSegkeyId);
+//         onContextMenuClose();
+//     };
+
+//     const onDeleteSegkeyButtonClick = async () => {
+//         if (!targetSegkeyId) return;
+//         if (isSegkeyExpanded(targetSegkeyId)) {
+//             await confirm("このキーワードは展開済みのため削除できません。", false);
+//             return;
+//         }
+//         const confirmed = await confirm("このキーワードを削除しますか？", true);
+//         if (!confirmed) return;
+//         removeSegkey(targetSegkeyId);
+//         onContextMenuClose();
+//         refresh();
+//     };
+
+//     const onRenameSegkeyButtonClick = async () => {
+//         const targetSegkey = getSegkey(targetSegkeyId);
+//         if (!targetSegkey) return;
+//         if (isSegkeyExpanded(targetSegkeyId)) {
+//             await confirm("このキーワードは展開済みのため変更できません。", false);
+//             return;
+//         }
+//         const newTitle = await prompt("新しいキーワード名を入力", true, targetSegkey.title);
+//         if (!newTitle) return;
+//         modifySegkeyTitle(targetSegkeyId, newTitle);
+//         onContextMenuClose();
+//         refresh();
+//     };
+
+//     const onContextMenuClose = () => {
+//         cleanup();
+//         hideContextMenu();
+//     };
+
+//     const openSourceUrlButton = document.getElementById("open-source-url-button");
+//     const deleteSegkeyButton = document.getElementById("delete-segkey-button");
+//     const renameSegkeyButton = document.getElementById("rename-segkey-button");
+
+//     function cleanup() {
+//         openSourceUrlButton?.removeEventListener("click", onOpenSourceUrlButtonClick);
+//         deleteSegkeyButton?.removeEventListener("click", onDeleteSegkeyButtonClick);
+//         renameSegkeyButton?.removeEventListener("click", onRenameSegkeyButtonClick);
+//         document.removeEventListener("click", onContextMenuClose);
+//         currentContextMenuCleanup = null;
+//     }
+
+//     openSourceUrlButton?.addEventListener("click", onOpenSourceUrlButtonClick);
+//     deleteSegkeyButton?.addEventListener("click", onDeleteSegkeyButtonClick);
+//     renameSegkeyButton?.addEventListener("click", onRenameSegkeyButtonClick);
+//     document.addEventListener("click", onContextMenuClose);
+
+//     currentContextMenuCleanup = cleanup;
 // }
 
-// function onTreeTabOpenRequest() {}
+const handleSegkeyDragStart = (targetDataTransferRef: DataTransfer, targetSegkeyId: string) => {
+    targetDataTransferRef.setData(DataTransferFormat.DraggingSegkeyId, targetSegkeyId);
+}
 
-// function onExportRequest() {}
+const handleDropOfTextOrSegkey = async (dataTransfer: DataTransfer, targetSegkeyId: string | null) => {
+    const extractedKeyword = dataTransfer.getData("text/plain");
+    const draggedId = dataTransfer.getData(DataTransferFormat.DraggingSegkeyId);
+    if (extractedKeyword) {
+        await handleExtractKeyword(extractedKeyword, targetSegkeyId);
+    } else if (draggedId) {
+        if (targetSegkeyId && targetSegkeyId !== draggedId) {
+            makeInclusionRelation(targetSegkeyId, draggedId);
+        } else if (!targetSegkeyId) {
+            removeInclusionRelation(draggedId);
+        }
+    }
+    refresh();
+}
 
-// function onImportRequest() {}
-
-// function onMessageReceive() {}
-
-// function onKeywordDragStart() {}
-
-// function onKeywordDrop() {}
-
-// window.addEventListener("load", onWindowLoad);
-// // window.
+const handleExtractKeyword = async (keyword: string, targetSegkeyId: string | null) => {
+    const currentPageUrl = await fetchCurrentPageUrl();
+    const result = extractSegkeyFromPage(keyword, currentPageUrl || "", targetSegkeyId);
+    if (isError(result) && result.error === "ExtractionFromGoogleNotAllowed") {
+        confirm("Googleの検索結果からは分節化できません", false);
+    }
+}

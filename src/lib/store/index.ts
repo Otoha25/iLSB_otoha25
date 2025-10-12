@@ -1,21 +1,18 @@
-// import type { MetaData, Quekey } from "@lib/types";
+import meta from "./meta";
+import qkeys from "./qkeys";
+import qlinks from "./qlinks";
+import segkeys from "./segkeys";
+import currentQkeyId from "./current-qkey-id";
+import { clearLocalStorage } from "./local-storage";
 
-// export function hasLearningData() {
-// 	const metaData = getMetaData();
-// 	return metaData != null;
-// }
-
-// export function createLearningData(
-// 	quekeyTitle: Quekey["title"],
-// 	username: MetaData["username"],
-// ) {
-// 	setMetaData();
-// }
-
-// export function clearStorage() {
-// 	localStorage.clear();
-// }
-
-// // export function putCurrentQK () {
-
-// // }
+export const store = {
+  meta,
+  qkeys,
+  qlinks,
+  segkeys,
+  currentQkeyId,
+  
+  clearAll () {
+    clearLocalStorage();
+  },
+};

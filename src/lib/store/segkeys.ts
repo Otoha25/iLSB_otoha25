@@ -7,7 +7,8 @@ const options: ListStoreAPI<Segkey> = {
 	all() {
 		const segkeys = getSegkeyList();
 		if (segkeys === null) {
-			throw new Error("Segkeys is not defined in LocalStorage.");
+			setSegkeyList([]);
+			return [];
 		}
 		return segkeys;
 	},

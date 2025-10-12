@@ -1,0 +1,209 @@
+:root {
+  --primary-color: #2e5ff0;
+  --primary-bg-color: #e4eeff;
+  --primary-line-color: #6796fd;
+  --primary-border-color: #a8c0ff;
+  --secondary-color: #656667;
+  --secondary-bg-color: #e7e9ed;
+  --secondary-border-color: #d1d3d5;
+  --text-color: #202124;
+  --white-color: #ffffff;
+
+  --space: 8px;
+  --space-half: 4px;
+  --space-double: 16px;
+  --space-triple: 24px;
+  --space-quadruple: 32px;
+
+  --radius: 8px;
+  --radius-double: 16px;
+  --primary-shadow: 0 4px 6px rgba(49, 100, 255, 0.1);
+  --secondary-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+
+  --transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
+  --opacity-hover: 0.8;
+  --primary-shadow-hover: 0 2px 3px rgba(49, 100, 255, 0.1);
+  --transform-hover: translateY(1px);
+
+  --white-bg-color-blur: rgba(255, 255, 255, 0.8);
+  --backdrop-filter-blur: blur(4px);
+
+  --keyword-bg-color: linear-gradient(to bottom, #c8edff 0%, #8dd3ff 100%);
+  --keyword-border-color: #9eceff;
+  --link-color: #fbb104;
+}
+
+body {
+  font-size: 16px;
+}
+
+.button {
+  display: inline-block;
+  padding: var(--space);
+  border: 1px solid var(--primary-border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--primary-shadow);
+  transition: var(--transition);
+  background-color: var(--primary-bg-color);
+  font-size: 1rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.button.primary {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.button.small {
+  font-size: 1rem;
+}
+
+.button:hover {
+  opacity: var(--opacity-hover);
+  box-shadow: var(--primary-shadow-hover);
+  transform: var(--transform-hover);
+}
+
+.button-container {
+  display: flex;
+  gap: var(--space);
+  flex-wrap: wrap;
+}
+
+.switch-button {
+  appearance: none;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--secondary-border-color);
+  background-color: var(--secondary-bg-color);
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.switch-button::after {
+  width: 14px;
+  height: 14px;
+  content: "";
+  border-radius: 50%;
+  background-color: var(--white-color);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.2s;
+}
+
+.switch-button:checked {
+  background-color: var(--primary-color);
+}
+
+.switch-button:checked::after {
+  left: calc(100% - 14px - 2px);
+}
+
+#context-menu {
+  visibility: hidden;
+  position: absolute;
+  width: 200px;
+  top: 0;
+  left: -220px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space);
+  background-color: var(--white-bg-color-blur);
+  backdrop-filter: var(--backdrop-filter-blur);
+  border: 1px solid var(--secondary-border-color);
+  border-radius: var(--radius-double);
+  box-shadow: var(--secondary-shadow);
+  z-index: 1000;
+}
+
+#context-menu.visible {
+  visibility: visible;
+}
+
+.context-menu-item {
+  padding: var(--space);
+  width: 100%;
+  border: transparent;
+  border-radius: var(--radius);
+  background-color: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: bacckground-color 0.2s;
+}
+
+.context-menu-item:hover {
+  color: var(--white-color);
+  background-color: var(--primary-color);
+}
+
+#dialog-container {
+  visibility: hidden;
+  display: grid;
+  place-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: opacity 0.2s, visibility 0.2s;
+  opacity: 0;
+}
+
+#dialog-container.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+#dialog {
+  width: min(480px, 90%);
+  padding: var(--space-triple);
+  border: 1px solid var(--secondary-border-color);
+  box-shadow: var(--secondary-shadow);
+  background-color: var(--white-bg-color-blur);
+  backdrop-filter: var(--backdrop-filter-blur);
+  border-radius: var(--radius-double);
+  z-index: 1001;
+  transition: transform 0.2s, opacity 0.2s;
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+#dialog-container.visible #dialog {
+  transform: scale(1);
+  opacity: 1;
+}
+
+#dialog-title {
+  font-size: 1.3rem;
+  margin-block-end: var(--space-double);
+}
+
+#dialog-input-container {
+  margin-bottom: var(--space-double);
+}
+
+#dialog-input-container input {
+  width: 100%;
+  padding: var(--space);
+  border: 1px solid var(--secondary-border-color);
+  border-radius: var(--radius);
+  font-size: 1.1rem;
+}
+
+#dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space);
+}
+
+#dialog-actions .button {
+  min-width: 6rem;
+  text-align: center;
+}

@@ -1,12 +1,13 @@
-import type { Quekey } from "@lib/types";
+import type { Qkey } from "@lib/types";
 import type { ListStoreAPI } from "./api";
-import { getQuekeyList, setQuekeyList } from "./local-storage";
+import { getQkeyList, setQkeyList } from "./local-storage";
 
-const options: ListStoreAPI<Quekey> = {
+const options: ListStoreAPI<Qkey> = {
 	all() {
-		const quekeys = getQuekeyList();
+		const quekeys = getQkeyList();
 		if (quekeys === null) {
-			throw new Error("Quekeys is not defined in LocalStorage.");
+			setQkeyList([]);
+			return [];
 		}
 		return quekeys;
 	},
@@ -30,7 +31,7 @@ const options: ListStoreAPI<Quekey> = {
 	insert(quekey) {
 		const oldQuekeys = this.all();
 		const newQuekeys = [...oldQuekeys, quekey];
-		setQuekeyList(newQuekeys);
+		setQkeyList(newQuekeys);
 		return newQuekeys;
 	},
 
@@ -38,7 +39,7 @@ const options: ListStoreAPI<Quekey> = {
 		const quekeys = this.all();
 		const index = quekeys.findIndex((quekey) => quekey.id === id);
 		quekeys.splice(index, 1);
-		setQuekeyList(quekeys);
+		setQkeyList(quekeys);
 		return quekeys;
 	},
 
@@ -50,7 +51,7 @@ const options: ListStoreAPI<Quekey> = {
 			}
 			return quekey;
 		});
-		setQuekeyList(quekeys);
+		setQkeyList(quekeys);
 		return quekeys;
 	},
 };

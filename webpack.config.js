@@ -8,7 +8,7 @@ module.exports = {
     entry: {
         "repository": "./src/repository/index.ts",
         "tree": "./src/tree/index.ts",
-        "content-scripts": "./src/content-scripts/index.ts",
+        "background": "./src/background/index.ts",
     },
 
     module: {

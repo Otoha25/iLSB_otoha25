@@ -1,13 +1,14 @@
 // quelink.ts
-import type { Quelink } from "@lib/types";
+import type { Qlink } from "@lib/types";
 import type { ListStoreAPI } from "./api";
-import { getQuelinkList, setQuelinkList } from "./local-storage";
+import { getQlinkList, setQlinkList } from "./local-storage";
 
-const options: ListStoreAPI<Quelink> = {
+const options: ListStoreAPI<Qlink> = {
 	all() {
-		const quelinks = getQuelinkList();
+		const quelinks = getQlinkList();
 		if (quelinks === null) {
-			throw new Error("Quelinks is not defined in LocalStorage.");
+			setQlinkList([]);
+			return [];
 		}
 		return quelinks;
 	},
@@ -31,7 +32,7 @@ const options: ListStoreAPI<Quelink> = {
 	insert(quelink) {
 		const oldQuelinks = this.all();
 		const newQuelinks = [...oldQuelinks, quelink];
-		setQuelinkList(newQuelinks);
+		setQlinkList(newQuelinks);
 		return newQuelinks;
 	},
 
@@ -41,7 +42,7 @@ const options: ListStoreAPI<Quelink> = {
 		if (index !== -1) {
 			quelinks.splice(index, 1);
 		}
-		setQuelinkList(quelinks);
+		setQlinkList(quelinks);
 		return quelinks;
 	},
 
@@ -53,7 +54,7 @@ const options: ListStoreAPI<Quelink> = {
 			}
 			return quelink;
 		});
-		setQuelinkList(newQuelinks);
+		setQlinkList(newQuelinks);
 		return newQuelinks;
 	},
 };

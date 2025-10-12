@@ -11,28 +11,31 @@
         <h1>Keyword Repository</h1>
 
         <div class="button-container">
-            <div class="button primary">Open Question Tree</div>
-            <div class="button">Save</div>
-            <div class="button">Load</div>
+            <div class="button primary small" id="open-question-tree-button">
+                Open Question Tree
+            </div>
+            <div class="button small">Save</div>
+            <div class="button small">Load</div>
         </div>
 
-        <div id="current-keyword">
-            <div id="current-keyword-label">Current Question Keyword:</div>
-            <div id="current-keyword-name">地球温暖化</div>
+        <div id="current-keyword-label">Current Question Keyword:</div>
+        <div id="current-keyword-name">
+            <!-- 地球温暖化 -->
         </div>
 
         <div id="repository">
+            <!--
             <div class="keyword parent">
-                <div class="keyword-name">温室効果ガス</div>
+                <div class="keyword-name" draggable="true">温室効果ガス</div>
                 <div class="keyword-children">
                     <div class="keyword">
-                        <div class="keyword-name">二酸化炭素</div>
+                        <div class="keyword-name" draggable="true">二酸化炭素</div>
                     </div>
                     <div class="keyword">
-                        <div class="keyword-name">メタン</div>
+                        <div class="keyword-name" draggable="true">メタン</div>
                     </div>
                     <div class="keyword">
-                        <div class="keyword-name">一酸化二窒素</div>
+                        <div class="keyword-name" draggable="true">一酸化二窒素</div>
                     </div>
                 </div>
             </div>
@@ -45,23 +48,36 @@
             <div class="keyword">
                 <div class="keyword-name">海面上昇</div>
             </div>
+            -->
         </div>
     </main>
     
 
-    <div class="context-menu">
-        <button class="context-menu-item">キーワード抽出元に戻る</button>
-        <button class="context-menu-item">キーワードを消す</button>
-        <button class="context-menu-item">キーワード名を変更する</button>
+    <div id="context-menu">
+        <!-- <button class="context-menu-item" id="open-source-url-button">
+            キーワード抽出元に戻る
+        </button>
+        <button class="context-menu-item" id="delete-segkey-button">
+            キーワードを消す
+        </button>
+        <button class="context-menu-item" id="rename-segkey-button">
+            キーワード名を変更する
+        </button> -->
     </div>
 
-    <div hidden class="deco">
-        <div id="contextmenu">
-            <ul>
-                <li id="searchKeyword">キーワード抽出元に戻る</li>
-                <li id="deleteKeyword">キーワードを消す</li>
-                <li id="changeKeyword">キーワード名を変更する</li>
-            </ul>
+
+    <div id="dialog-container">
+        <div id="dialog">
+            <div id="dialog-title">
+                <!-- キーワード名を変更 -->
+            </div>
+            <div id="dialog-input-container">
+                <input type="text" id="dialog-input"/>
+            </div>
+            <div id="dialog-actions">
+                <button id="dialog-cancel-button" class="button">キャンセル</button>
+                <button id="dialog-ok-button" class="button primary">OK</button>
+            </div>
         </div>
     </div>
 </body>

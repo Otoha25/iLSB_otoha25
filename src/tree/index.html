@@ -5,6 +5,113 @@
         <title>Question Tree</title>
     </head>
     <body>
-        question tree
+        <div class="floating-menu left">
+            <h1>Question Tree</h1>
+        </div>
+        <div class="floating-menu right">
+            <label for="link-modifying-mode-switcher">リンク編集</label>
+            <input type="checkbox" id="link-modifying-mode-switcher" class="switch-button"/>
+        </div>
+        <div id="keyword-map">
+            <!--
+            <div class="qkeyword" style="top: 70px; left: 10px;" id="q1">
+                地球温暖化
+            </div>
+
+            <div class="qkeyword" style="top: 170px; left: 110px;" id="q2">
+                二酸化炭素
+            </div>
+
+            <div class="link">
+                <div class="link-arrow" style="top: 150px; left: 80px; width: 141px; height: 4px; transform: rotate(45deg);"></div>
+                <div class="link-label" style="top: 140px; left: 120px;">属性</div>
+            </div>
+            -->
+        </div>
+
+        <div id="context-menu">
+            <!-- <button class="context-menu-item" id="open-source-url-button">
+                    キーワード抽出元に戻る
+                </button>
+                <button class="context-menu-item" id="delete-segkey-button">
+                    キーワードを消す
+                </button>
+                <button class="context-menu-item" id="rename-segkey-button">
+                    キーワード名を変更する
+                </button> -->
+        </div>
+
+        <div id="selector-container">
+            <div id="selector-container-header">
+                <div id="selector-title">
+                    <!-- 地球温暖化の課題タイプを設定 -->
+                </div>
+                <button id="selector-close-button">×</button>
+            </div>
+            <div id="selector-body">
+                <!--
+                <div class="selector-group">
+                    <div class="selector-group-header">事柄</div>
+                    <button class="selector-item button">事柄</button>
+                    <button class="selector-item button">現象</button>
+                    <button class="selector-item button">事件</button>
+                    <button class="selector-item button">事故</button>
+                    <button class="selector-item button">行事</button>
+                </div>
+                <div class="selector-group">
+                    <div class="selector-group-header">時</div>
+                    <button class="selector-item button">時</button>
+                    <button class="selector-item button">年代</button>
+                    <button class="selector-item button">期間</button>
+                    <button class="selector-item button">季節</button>
+                </div>
+                <div class="selector-group">
+                    <div class="selector-group-header">事柄</div>
+                    <button class="selector-item button">事柄</button>
+                    <button class="selector-item button">現象</button>
+                    <button class="selector-item button">事件</button>
+                    <button class="selector-item button">事故</button>
+                    <button class="selector-item button">行事</button>
+                </div>
+                <div class="selector-group">
+                    <div class="selector-group-header">時</div>
+                    <button class="selector-item button">時</button>
+                    <button class="selector-item button">年代</button>
+                    <button class="selector-item button">期間</button>
+                    <button class="selector-item button">季節</button>
+                </div>
+                <div class="selector-group">
+                    <div class="selector-group-header">事柄</div>
+                    <button class="selector-item button">事柄</button>
+                    <button class="selector-item button">現象</button>
+                    <button class="selector-item button">事件</button>
+                    <button class="selector-item button">事故</button>
+                    <button class="selector-item button">行事</button>
+                </div>
+                <div class="selector-group">
+                    <div class="selector-group-header">時</div>
+                    <button class="selector-item button">時</button>
+                    <button class="selector-item button">年代</button>
+                    <button class="selector-item button">期間</button>
+                    <button class="selector-item button">季節</button>
+                </div>
+                -->
+            </div>
+        </div>
+
+        <div id="dialog-container">
+            <div id="dialog">
+                <div id="dialog-title">
+                    <!-- キーワード名を変更 -->
+                </div>
+                <div id="dialog-input-container">
+                    <input type="text" id="dialog-input" />
+                </div>
+                <div id="dialog-actions">
+                    <button id="dialog-cancel-button" class="button">キャンセル</button>
+                    <button id="dialog-ok-button" class="button primary">OK</button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

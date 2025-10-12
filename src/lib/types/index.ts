@@ -1,39 +1,33 @@
-export type Id = `${string}-${string}-${string}-${string}-${string}`;
+type Id = string;
 
-export type MetaData = {
+export type Meta = {
 	username: string;
-	root_quekey_id: Quekey["id"];
-
-	start_date: Date;
-	end_date: Date; //使用しないが，念のため．
+	root_qkey_id: Qkey["id"];
+	start_date: number;
+	end_date?: number; //使用しないが，念のため．
 };
 
-export type Quekey = {
+export type Qkey = {
 	id: Id;
-	parent_id: Quekey["id"];
-	segkey_id: Segkey["id"];
+	parent_id: Qkey["id"] | null;
+	segkey_id: Segkey["id"] | null;
 	title: string;
-
 	node_x: number;
 	node_y: number;
-	node_width: number;
-	node_height: number;
-
-	qtype_id: string;
+	qtype_name: string | null;
 };
 
-export type Quelink = {
+export type Qlink = {
 	id: Id;
-	parent_quekey_id: Quekey["id"];
-	child_quekey_id: Quekey["id"];
-
-	attribution_id: string;
+	parent_qkey_id: Qkey["id"];
+	child_qkey_id: Qkey["id"];
+	property_name: string | null;
 };
 
 export type Segkey = {
 	id: Id;
-	belonged_qkey_id: string;
-	parent_id: string;
+	belonged_qkey_id: Qkey["id"];
+	parent_id: Segkey["id"] | null;
 	title: string;
 	source_url: string;
 };

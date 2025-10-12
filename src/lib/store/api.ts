@@ -1,3 +1,8 @@
+export type ValueStoreAPI<T extends string | number> = {
+	get: () => T;
+	set: (t: T) => T;
+}
+
 export type ItemStoreAPI<T extends {}> = {
 	get: () => T;
 	init: (t: T) => T;
