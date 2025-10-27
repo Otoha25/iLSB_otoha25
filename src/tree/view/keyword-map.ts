@@ -162,6 +162,7 @@ function createQkeyElem(qkey: Qkey, listener: {
     elem.innerText = qkey.title;
     elem.style.left = `${left}px`;
     elem.style.top = `${top}px`;
+    elem.style.setProperty("--len", qkey.title.length.toString());
     elem.addEventListener("click", listener.onClick);
     elem.addEventListener("dblclick", listener.onDoubleClick);
     elem.addEventListener("contextmenu", listener.onContextMenu);

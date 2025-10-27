@@ -46,6 +46,7 @@ function createSegkeyElem(
     const titleElem = document.createElement("div");
     titleElem.setAttribute("class", "keyword-name");
     titleElem.setAttribute("draggable", "true");
+    titleElem.style.setProperty("--len", segkey.title.length.toString());
     titleElem.innerText = segkey.title;
     titleElem.addEventListener("dragstart", onTitleDragStart);
     titleElem.addEventListener("contextmenu", onTitleContextMenu);
@@ -64,27 +65,3 @@ function createSegkeyElem(
     
     return elem;
 }
-
-// export function showContextMenu(x: number, y: number) {
-//     const contextMenu = document.getElementById("segkey-context-menu");
-//     if (!contextMenu) return;
-    
-//     contextMenu.style.display = "block";
-
-//     const windowWidth = window.innerWidth;
-//     const windowHeight = window.innerHeight;
-//     const width = contextMenu.offsetWidth;
-//     const height = contextMenu.offsetHeight;
-
-//     const left = Math.min(x, windowWidth - width);
-//     const top = Math.min(y, windowHeight - height);
-
-//     contextMenu.style.left = `${left}px`;
-//     contextMenu.style.top = `${top}px`;
-// }
-
-// export function hideContextMenu() {
-//     const contextMenu = document.getElementById("segkey-context-menu");
-//     if (!contextMenu) return;
-//     contextMenu.style.display = "none";
-// }

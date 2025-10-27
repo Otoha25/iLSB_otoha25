@@ -8,6 +8,7 @@ import {
     getSegkey,
     hasLearningData,
     isSegkeyExpanded,
+    loadLearningData,
     makeInclusionRelation,
     modifySegkeyTitle,
     openKeywordMap,
@@ -15,6 +16,7 @@ import {
     openSourceUrl,
     removeInclusionRelation,
     removeSegkey,
+    saveLearningData,
     startLearning,
 } from "@lib/service";
 import { drawRepositoryContent } from "./view";
@@ -38,6 +40,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    refresh();
+});
+
+const saveButton = document.getElementById("save-button")!;
+saveButton.addEventListener("click", async () => {
+    saveLearningData();
+});
+
+const loadButton = document.getElementById("load-button")!;
+loadButton.addEventListener("click", async () => {
+    loadLearningData();
     refresh();
 });
 
@@ -133,70 +146,6 @@ const handleContextMenuOpen = (targetSegkeyId: string, x: number, y: number) => 
         }},
     ]);
 };
-
-let currentContextMenuCleanup: (() => void) | null = null;
-
-// const _handleContextMenuOpen = (targetSegkeyId: string, x: number, y: number) => {
-//     currentContextMenuCleanup?.();
-//     showContextMenu(x, y);
-
-//     const onOpenSourceUrlButtonClick = () => {
-//         if (!targetSegkeyId) return;
-//         openSourceUrl(targetSegkeyId);
-//         onContextMenuClose();
-//     };
-
-//     const onDeleteSegkeyButtonClick = async () => {
-//         if (!targetSegkeyId) return;
-//         if (isSegkeyExpanded(targetSegkeyId)) {
-//             await confirm("このキーワードは展開済みのため削除できません。", false);
-//             return;
-//         }
-//         const confirmed = await confirm("このキーワードを削除しますか？", true);
-//         if (!confirmed) return;
-//         removeSegkey(targetSegkeyId);
-//         onContextMenuClose();
-//         refresh();
-//     };
-
-//     const onRenameSegkeyButtonClick = async () => {
-//         const targetSegkey = getSegkey(targetSegkeyId);
-//         if (!targetSegkey) return;
-//         if (isSegkeyExpanded(targetSegkeyId)) {
-//             await confirm("このキーワードは展開済みのため変更できません。", false);
-//             return;
-//         }
-//         const newTitle = await prompt("新しいキーワード名を入力", true, targetSegkey.title);
-//         if (!newTitle) return;
-//         modifySegkeyTitle(targetSegkeyId, newTitle);
-//         onContextMenuClose();
-//         refresh();
-//     };
-
-//     const onContextMenuClose = () => {
-//         cleanup();
-//         hideContextMenu();
-//     };
-
-//     const openSourceUrlButton = document.getElementById("open-source-url-button");
-//     const deleteSegkeyButton = document.getElementById("delete-segkey-button");
-//     const renameSegkeyButton = document.getElementById("rename-segkey-button");
-
-//     function cleanup() {
-//         openSourceUrlButton?.removeEventListener("click", onOpenSourceUrlButtonClick);
-//         deleteSegkeyButton?.removeEventListener("click", onDeleteSegkeyButtonClick);
-//         renameSegkeyButton?.removeEventListener("click", onRenameSegkeyButtonClick);
-//         document.removeEventListener("click", onContextMenuClose);
-//         currentContextMenuCleanup = null;
-//     }
-
-//     openSourceUrlButton?.addEventListener("click", onOpenSourceUrlButtonClick);
-//     deleteSegkeyButton?.addEventListener("click", onDeleteSegkeyButtonClick);
-//     renameSegkeyButton?.addEventListener("click", onRenameSegkeyButtonClick);
-//     document.addEventListener("click", onContextMenuClose);
-
-//     currentContextMenuCleanup = cleanup;
-// }
 
 const handleSegkeyDragStart = (targetDataTransferRef: DataTransfer, targetSegkeyId: string) => {
     targetDataTransferRef.setData(DataTransferFormat.DraggingSegkeyId, targetSegkeyId);

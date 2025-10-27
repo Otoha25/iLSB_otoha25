@@ -5,6 +5,7 @@ import { convertToTree, Tree } from "./utils/tree-convertion";
 import { clearLocalStorage, existsLocalStorage } from "@lib/store/local-storage";
 import { createRuntimeMessage } from "./utils/runtime-message";
 import { error, Result, success } from "./utils/result";
+import { exportLocalStorageData, importLocalStorageData } from "@lib/store/importer-and-exporter";
 
 export { Tree };
 
@@ -307,4 +308,57 @@ export function openSearchEnginePage(qkey_id: Qkey["id"]) {
     const query = encodeURIComponent(qkey.title);
     const url = `https://www.google.com/search?q=${query}`;
     browser.tabs.create({ url });
+}
+
+export function saveLearningData() {
+    const data = exportLocalStorageData();
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const meta = store.meta.get();
+    if (!meta) throw new Error("Meta information is missing.");
+    const rootQkey = store.qkeys.get(meta.root_qkey_id);
+    if (!rootQkey) throw new Error("Root Qkey not found.");
+    const filename = `${rootQkey.title}_${meta.username}.ls.json`;
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+export function loadLearningData() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'application/json');
+
+    input.addEventListener('change', async () => {
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const content = e.target?.result;
+                    if (typeof content === 'string') {
+                        const data = JSON.parse(content);
+                        importLocalStorageData(data);
+                        console.log('Learning data imported successfully.');
+                    } else {
+                        throw new Error('Failed to read file content.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    throw new Error('Error parsing JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    // Trigger the file input dialog
+    input.click();
 }

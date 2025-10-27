@@ -56,12 +56,13 @@ h1 {
 }
 
 .keyword-name {
+	--len: 15;
 	position: relative;
 	margin-inline: var(--space-double);
 	padding-block: var(--space-half);
 	padding-inline: var(--space);
 	text-align: center;
-	font-size: 1.4rem;
+	font-size: min(1.4rem, calc((100vw - 32px) / var(--len)));
 	border: 1px solid var(--keyword-border-color);
 	border-radius: var(--radius);
 	color: var(--text-color);

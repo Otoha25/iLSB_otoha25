@@ -52,11 +52,12 @@ label[for="link-modifying-mode-switcher"] {
 }
 
 .qkeyword {
+  --len: 15;
   position: absolute;
   display: grid;
   place-content: center;
   text-align: center;
-  font-size: 1.0rem;
+  font-size: min(1.0rem, calc(180px / var(--len)));
   width: 180px;
   height: 60px;
   border: 1px solid var(--keyword-border-color);

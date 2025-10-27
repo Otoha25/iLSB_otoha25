@@ -182,6 +182,7 @@ body {
 
 #dialog-title {
   font-size: 1.3rem;
+  line-height: 1.8rem;
   margin-block-end: var(--space-double);
 }
 
